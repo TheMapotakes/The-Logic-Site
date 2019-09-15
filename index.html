@@ -23,6 +23,7 @@
                 <label for = "autoMazeCheck">Auto-Maze</label> </label>
                 <input type="checkbox" checked = true id = "autoMazeCheck">
                 <input class='button' type='submit' id='Mazeify' value = 'Mazeify'>
+                <input class='button' type='submit' id='solve' value = 'Solve Maze'>
             </div>
             <div class="optionPanel"> Seed
                 <input type="range" min="1" max="9223372036854775807" value="1" class="slider" id="seedSlider">
@@ -62,8 +63,55 @@
             </div>
         </div>
     </body>
+
+    <div id="tileInfoDiv">
+        <div id="tileInfoDivheader">Tile Information</div>
+
+        <div id=info>
+        </div>
+    </div>
+
+    <script>
+        dragElement(document.getElementById("tileInfoDiv"));
+        
+        function dragElement(elmnt) {
+          var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+          if (document.getElementById(elmnt.id + "header")) {
+            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+          } else {
+            elmnt.onmousedown = dragMouseDown;
+          }
+        
+          function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+          }
+        
+          function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+          }
+        
+          function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+          }
+        }
+        </script>
+
     <canvas class='canvas' height='600' id='canvas' width='700'></canvas>
     <script src='./generator.js' type='text/javascript'></script>
+
     <footer>
         <a href="https://github.com/caltropUwU">Made by CaltropUwU</a>
     </footer>
