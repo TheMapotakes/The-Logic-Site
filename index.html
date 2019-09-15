@@ -1,8 +1,117 @@
 <!DOCTYPE html>
-
 <html>
+    <head>
+        <title>Maze Generator</title>
+        <link href='./main.css' rel='stylesheet' type='text/css'>
+    </head>
+
     <body>
-        <h1>hhhhhhhhhhhhhhhhh</h1>
-        <p>hhhh.</p>
+        <div class='sidebar'>
+
+            <div class="optionPanel">Width
+                    <input type="range" min="4" max="256" value="20" class="slider" id="width">
+                    <input type="number" id="widthNum" min="4" max="300">
+            </div>
+
+            <div class="optionPanel">Height
+                <input type="range" min="4" max="256" value="20" class="slider" id="height">
+                <input type="number" id="heightNum" min="4" max="300">
+            </div>
+
+            <div class="optionPanel">
+                <label for = "autoMazeCheck">Auto-Maze</label> </label>
+                <input type="checkbox" checked = true id = "autoMazeCheck">
+                <input class='button' type='submit' id='Mazeify' value = 'Mazeify'>
+                <input class='button' type='submit' id='solve' value = 'Solve Maze'>
+            </div>
+            <div class="optionPanel"> Seed
+                <input type="range" min="1" max="9223372036854775807" value="1" class="slider" id="seedSlider">
+                <input type="number" id="seedNum" min="1" max="9223372036854775807">
+            </div>
+
+            <div class="optionPanel">
+                <div>
+                    <label for = "stepbystepCheck">step-by-step</label> </label>
+                    <input type="checkbox" checked = true id = "stepbystepCheck">
+                </div>
+
+                <div>
+                    <label for = "loop">Loop Generation</label> </label>
+                    <input type="checkbox" checked = false id = "loop">
+                </div>
+                    <input type="range" min="1" max="1000" value="100" class="slider" id="delaySlider">
+                    <input type="number" id="delayNum" min="1" max="6000" value = 100>
+            </div>
+
+            <div class ="optionPanelColor">
+                <input type="color" id="visited" name="visited"
+                    value="#BEBEBE">
+                <label for="visited">Visited</label>
+
+                <input type="color" id="walls" name="walls"
+                    value="#000000">
+                <label for="walls">Walls</label>
+
+                <input type="color" id="currentTile" name="currentTile"
+                    value="#00FF00">
+                <label for="currentTile">Selected</label>
+
+                <input type="color" id="currentTileback" name="currentTileback"
+                    value="#FF0000">
+                <label for="currentTileback">Backtracking</label>
+            </div>
+        </div>
     </body>
+
+    <div id="tileInfoDiv">
+        <div id="tileInfoDivheader">Tile Information</div>
+
+        <div id=info>
+        </div>
+    </div>
+
+    <script>
+        dragElement(document.getElementById("tileInfoDiv"));
+        
+        function dragElement(elmnt) {
+          var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+          if (document.getElementById(elmnt.id + "header")) {
+            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+          } else {
+            elmnt.onmousedown = dragMouseDown;
+          }
+        
+          function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+          }
+        
+          function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+          }
+        
+          function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+          }
+        }
+        </script>
+
+    <canvas class='canvas' height='600' id='canvas' width='700'></canvas>
+    <script src='./generator.js' type='text/javascript'></script>
+
+    <footer>
+        <a href="https://github.com/caltropUwU">Made by CaltropUwU</a>
+    </footer>
 </html>
