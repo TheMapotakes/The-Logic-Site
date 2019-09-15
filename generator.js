@@ -174,8 +174,8 @@ class Tile {
 
 
 canvas.onmousemove = function(e) {
-	let pointX = e.clientX - scale;
-	let pointY = e.clientY - (245 + scale);
+	let pointX = e.clientX - (this.offsetLeft + scale);
+	let pointY = e.clientY - ((this.offsetTop + scale) - document.documentElement.scrollTop);
 	let selected = grid.find(t => t.x <= pointX && t.x * scale >= pointX && t.y <= pointY && t.y * scale >= pointY);
 	if(!selected) {
 		if(lastSelected) lastSelected.selected = false;
