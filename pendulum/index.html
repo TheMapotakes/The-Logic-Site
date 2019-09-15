@@ -1,8 +1,56 @@
 <!DOCTYPE html>
-
 <html>
-    <body>
-        <h1>test</h1>
-        <p>lol</p>
-    </body>
+  <head>
+    <title>physic thingy lol</title>
+    <link href='./main.css' rel='stylesheet' type='text/css'>
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js' type='text/javascript'></script>
+
+    <script type='text/javascript'>
+        $(() => {
+        var newheight = $(window).height();
+        console.log(newheight);
+        $('.sidebar').height(newheight);
+        });
+    </script>
+  </head>
+
+
+  <body style='margin: 0;max-width:100%;padding:0'>
+    <div id='sidebar'>Options
+        <script>
+            $(document).ready(function() {
+                var max_fields = 10;
+                var wrapper = $(".sidebar");
+                var add_button = $(".add_form_field");
+        
+                var x = 0;
+                $(add_button).click(function(e) {
+                    e.preventDefault();
+                    if (x < max_fields) {
+                        x++;
+                        $(wrapper).append('<div><label for = "mass'+x+'"> Mass</label><input id="mass'+x+'" max = "50" min = "1" type = "range" value = "10"><label for="Phi'+x+'">Phi (in deg):</label><input id="Phi'+x+'" max="90" min="0" type="range" value="50"><a href="#" class="delete">Delete</a></div>'); //add input box
+                    } else {
+                        alert('You Reached the limits')
+                    }
+                });
+        
+                /*$(wrapper).on("click", ".delete", function(e) {
+                    e.preventDefault();
+                    $(this).parent('div').remove();
+                    x--;
+                });*/
+            });
+        </script>
+
+        <button class="add_form_field">Add New Field &nbsp; 
+                <span style="font-size:16px; font-weight:bold;">+ </span>
+        </button>
+
+        <form id='set_variables_form'>
+
+        <input class='submit-btn' type='submit' value='Start Simulation'>
+    </div>
+    <canvas class='phys-canvas' height='600' id='canvas' width='700'></canvas>
+    <script src='./sim.js' type='text/javascript'></script>
+  </body>
 </html>
