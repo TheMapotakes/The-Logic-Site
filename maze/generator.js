@@ -126,6 +126,7 @@ class Tile {
 			this.draw();
 		};
 		this.defineCosts = function(start, end) {
+			if(!start || !end) return;
 			this.gCost = Math.abs(start.x - this.x) + Math.abs(start.y - this.y);
 			this.hCost = Math.abs(end.x - this.x) + Math.abs(end.y - this.y);
 			this.fCost = this.gCost + this.hCost;
