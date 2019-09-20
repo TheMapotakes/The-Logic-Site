@@ -3,12 +3,23 @@
     <head>
         <title>Boids</title>
         <link href='./main.css' rel='stylesheet' type='text/css'>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148402025-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-148402025-1');
+        </script>
+
     </head>
 
     <div id="welcome" class="welcome">
         <style>
-            @font-face { font-family: ComfortaaLight; src: url('./fonts/Comfortaa-Light.ttf') format("truetype"); } 
-            @font-face { font-family: ComfortaaRegular; src: url('./fonts/Comfortaa-Regular.ttf') format("truetype"); } 
+            @font-face { font-family: ComfortaaLight; src: url('./assets/Comfortaa-Light.ttf') format("truetype"); } 
+            @font-face { font-family: ComfortaaRegular; src: url('./assets/Comfortaa-Regular.ttf') format("truetype"); } 
 
             @keyframes moveIn {
                 from {transform: translateY(0); opacity: 0;}
@@ -107,17 +118,6 @@
     <footer id="footer">
         n FPS, made by <a href="https://twitter.com/_Caltrop" target="_blank">@_Caltrop</a>
     </footer>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148402025-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-148402025-1');
-    </script>
-
 
     <canvas class='canvas' height='1080' id='canvas' width='1920'></canvas>
     <script src="./classes/boid.js"></script>
