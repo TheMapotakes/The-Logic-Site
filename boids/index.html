@@ -3,6 +3,7 @@
     <head>
         <title>Boids</title>
         <link href='./main.css' rel='stylesheet' type='text/css'>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="icon" href="./assets/icon.png">
 
         <meta content="Boids - Particle Simulation Sandbox" property="og:title">
@@ -78,7 +79,7 @@
                 <input type="number" min="0" max="200" value="50" id="alignmentper">
 
                 <label for = "cohersionper"> Cohersion</label>
-                <input type="number" min="0" max="200" value="50" id="cohersionper">
+                <input type="number" min="0" max="200" value="75" id="cohersionper">
 
                 <label for="debugRange">Debug Boid</label>
                 <input type="range" min="0" max="100" value="0" id="debugRange">
@@ -117,9 +118,11 @@
     </footer>
 
     <canvas class='canvas' height='1080' id='canvas' width='1920'></canvas>
+    <script src="./classes/cursor.js"></script>
     <script src="./classes/boid.js"></script>
     <script src="./classes/localGroup.js"></script>
     <script src="./classes/flock.js"></script>
+    <script src="./classes/repulsion.js"></script>
     <script src="./victor.js"></script>
     <script src='./simulate.js' type='text/javascript'></script>
 </html>

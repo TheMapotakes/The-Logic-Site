@@ -28,7 +28,7 @@ var maxForce = 0.001;
 
 var seperationPerceptionRange = 25;
 var alignmentPerceptionRange = 50;
-var cohersionPerceptionRange = 50;
+var cohersionPerceptionRange = 75;
 
 var seperationMultiplier = 1.8;
 var alignmentMultiplier = 1;
@@ -104,25 +104,49 @@ class Random {
 	}
 }
 var rng = new Random(Date.now());
-
 var flock = new Flock(100);
+var cursor = new Cursor();
+
+var repulsions = [];
 
 var spawnMove = false;
-canvas.onmousedown = function() {
-	spawnMove = true;
-};
-canvas.onmouseup = function() {
-	spawnMove = false;
-};
-canvas.onmousemove = function(e) {
-	if (spawnMove) {
-		var x, y;
-
-		x = e.clientX - (canvas.offsetLeft + document.documentElement.scrollLeft);
-		y = e.clientY - (canvas.offsetTop + document.documentElement.scrollTop);
-		flock.boids.push(new Boid(new Victor(x, y)));
+var m2down = false;
+var m2ClickId;
+canvas.onmousedown = function(e) {
+	if (e.which == 1) spawnMove = true;
+	if (e.which == 3) {
+		m2down = true;
+		m2ClickId = ~~(rng.random() * 1000);
+		repulsions.push(new RepulsionRadius(e.clientX, e.clientY, 128, m2ClickId));
 	}
 };
+canvas.onmouseup = function(e) {
+	if (e.which == 1) spawnMove = false;
+	if (e.which == 3) m2down = false;
+};
+canvas.onmousemove = function(e) {
+	var x, y;
+
+	x = e.clientX - (canvas.offsetLeft + document.documentElement.scrollLeft);
+	y = e.clientY - (canvas.offsetTop + document.documentElement.scrollTop);
+
+	switch (e.which) {
+		case 1:
+			if (spawnMove) {
+				flock.boids.push(new Boid(new Victor(x, y)));
+			}
+			break;
+		case 2:
+			e.preventDefault();
+			break;
+	}
+
+	cursor.move(x, y);
+};
+window.addEventListener('contextmenu', (e) => {
+	e.preventDefault();
+});
+
 var footer = document.getElementById('footer');
 
 var lastLoop, currentLoop, fps;
@@ -142,4 +166,9 @@ setInterval(() => {
 	footer.innerHTML = average(fpsArr).toFixed() + ' FPS, made by <a href="https://twitter.com/_Caltrop" target="_blank">@_Caltrop</a>';
 
 	flock.update();
+	for (let repulse of repulsions) {
+		repulse.update(m2down, m2ClickId);
+	}
+	cursor.render();
+	if (cursor.lastPosition.length > 1) cursor.lastPosition.shift();
 }, 5);

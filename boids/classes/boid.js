@@ -49,8 +49,16 @@ class Boid {
 					let diff = new Victor(this.position.x, this.position.y);
 					diff.subtract(boid.position);
 					diff.divide({ x: dist, y: dist });
-
 					avg = diff.add(avg);
+
+					if (this.debug) {
+						ctx.strokeStyle = '#FFFF00';
+						ctx.beginPath();
+						ctx.moveTo(this.position.x, this.position.y);
+						ctx.lineTo(boid.position.x, boid.position.y);
+						ctx.closePath();
+						ctx.stroke();
+					}
 				}
 			}
 			if (inRange) {
@@ -93,10 +101,7 @@ class Boid {
 				let dist = this.position.distance(boid.position);
 				if (dist < cohersionPerceptionRange && boid.id != this.id) {
 					inRange++;
-					avg = {
-						x : avg.x + boid.position.x,
-						y : avg.y + boid.position.y
-					};
+					avg.add(boid.position);
 				}
 			}
 			if (inRange) {
@@ -104,8 +109,7 @@ class Boid {
 				avg.y /= inRange;
 
 				if (this.debug) {
-					ctx.fillStyle = '#66FF66';
-					//ctx.fillRect(avg.x - 5, avg.y - 5, avg.x + 5, avg.y + 5);
+					drawCricle('#66FF66C8', avg.x, avg.y, 5);
 				}
 
 				avg = {
@@ -116,8 +120,29 @@ class Boid {
 			return new Victor(avg.x, avg.y);
 		};
 
+		this.getRepulsed = function(repulsion) {
+			var repulsionFactor = new Victor(0, 0);
+
+			let dist = this.position.distance(repulsion.position) - repulsion.size;
+			if (dist < cohersionPerceptionRange + repulsion.size) {
+				let repulsionFactor = new Victor(this.position.x, this.position.y);
+				repulsionFactor.subtract(repulsion.position);
+				repulsionFactor.divide({ x: dist, y: dist });
+			}
+			repulsionFactor.subtract(this.velocity).multiply({ x: 0.1 * repulsion.size, y: 0.1 * repulsion.size });
+			return repulsionFactor;
+		};
+
 		this.behave = function() {
 			if (!this.localGroup) return;
+			let repulsion = false;
+			for (let repulse of repulsions) {
+				if (!repulse.localGroup) continue;
+				if (repulse.localGroup.id == this.localGroup.id) repulsion = repulse;
+			}
+
+			this.acceleration = new Victor(0, 0);
+
 			var boids = this.localGroup.getRelevantBoids();
 
 			var alignment = this.align(boids).multiply({
@@ -132,11 +157,13 @@ class Boid {
 				x : seperationMultiplier,
 				y : seperationMultiplier
 			});
-
-			this.acceleration = new Victor(0, 0);
-			this.acceleration.add(seperation);
-			this.acceleration.add(cohersion);
-			this.acceleration.add(alignment);
+			if (repulsion) {
+				this.acceleration.add(this.getRepulsed(repulsion));
+			} else {
+				this.acceleration.add(seperation);
+				this.acceleration.add(cohersion);
+				this.acceleration.add(alignment);
+			}
 		};
 
 		this.drawHeading = function(color) {
