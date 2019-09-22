@@ -83,6 +83,20 @@ document.getElementById('reset').onclick = function() {
 document.getElementById('murder').onclick = function() {
 	renderList.length = 0;
 };
+document.getElementById('bounce').oninput = function() {
+	hExtraOrdinare(this.value);
+	document.getElementById('bounceNum').value = this.value;
+};
+document.getElementById('bounceNum').oninput = function() {
+	hExtraOrdinare(this.value);
+	document.getElementById('bounce').value = this.value;
+};
+
+function hExtraOrdinare(n) {
+	for (let o of renderList) {
+		o.restitution = n;
+	}
+}
 
 var lastCalledTime;
 var fps;
