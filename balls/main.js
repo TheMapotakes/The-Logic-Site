@@ -79,6 +79,13 @@ document.getElementById('reset').onclick = function() {
 	document.getElementById('gyNum').value = 0.01;
 	trailLength = 10;
 	document.getElementById('showTrails').checked = true;
+	document.getElementById('walls').checked = true;
+	document.getElementById('bounce').value = -0.7;
+	document.getElementById('bounceNum').value = -0.7;
+	for (let o of renderList) {
+		o.wraps = true;
+		o.restitution = -0.7;
+	}
 };
 document.getElementById('murder').onclick = function() {
 	renderList.length = 0;
