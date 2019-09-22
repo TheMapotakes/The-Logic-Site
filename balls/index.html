@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Balls :-)</title>
+        <link href='./style.css' rel='stylesheet' type='text/css'>
+        <meta content="Bad Physics Engine" property="og:title">
+        <meta content="Balls. This Site includes balls." property="og:description">
+        <meta content="Caltrop" property="og:site_name">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    </head>
+
+    <body>
+        <div class="optionPanel">Gravity X
+                <input type="range" min="-0.1" max="0.1" value="0" class="slider" id="gx" step="0.001">
+                <input type="number" id="gxNum" min="-1" max="1" value="0" step="0.001">
+            </div>
+        <div class="optionPanel">Gravity Y
+            <input type="range" min="-0.1" max="0.1" value="0.001" class="slider" id="gy" step="0.001">
+            <input type="number" id="gyNum" min="-1" max="1" value="0.01" step="0.001">
+        </div>
+        <div class="optionPanel">
+            <label for = "showTrails">Enable Trails</label> </label>
+            <input type="checkbox" checked = true id = "showTrails">
+        </div>
+        <div class="optionPanel">
+            <input class='button' type='submit' id='reset' value = 'Reset to default'>
+        </div>
+        <div class="optionPanel">
+                <input class='button' type='submit' id='murder' value = 'Massacre the balls'>
+        </div>
+    </body>
+
+    <canvas class='canvas' height='800' id='canvas' width='800'></canvas>
+    <script src='./classes/vector.js'></script>
+    <script src='./classes/selector.js'></script>
+    <script src='./main.js'></script>
+    <script src='./draw.js'></script>
+    <script src='./classes/genericObject.js'></script>
+    <script src='./classes/ball.js'></script>
+</html>

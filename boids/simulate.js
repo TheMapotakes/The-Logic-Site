@@ -161,7 +161,7 @@ setInterval(() => {
 	fps = 2000 / (currentLoop - lastLoop);
 	lastLoop = currentLoop;
 	if (isFinite(fps)) fpsArr.push(fps);
-	if (fpsArr.length > 100) fpsArr.shift();
+	if (fpsArr.length > 25) fpsArr.shift();
 
 	footer.innerHTML = average(fpsArr).toFixed() + ' FPS, made by <a href="https://twitter.com/_Caltrop" target="_blank">@_Caltrop</a>';
 
