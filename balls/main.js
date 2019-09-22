@@ -18,7 +18,7 @@ canvas.onmousedown = function(e) {
 				}
 			}
 			if (!foundElement) {
-				renderList.push(new Ball(x, y, null, true, true, false, true));
+				renderList.push(new Ball(x, y, null, true, true, false, !document.getElementById('walls').checked));
 				selector.select(renderList[renderList.length - 1]);
 			}
 			break;
@@ -90,6 +90,11 @@ document.getElementById('bounce').oninput = function() {
 document.getElementById('bounceNum').oninput = function() {
 	hExtraOrdinare(this.value);
 	document.getElementById('bounce').value = this.value;
+};
+document.getElementById('walls').onclick = function() {
+	for (let o of renderList) {
+		o.wraps = !this.checked;
+	}
 };
 
 function hExtraOrdinare(n) {
