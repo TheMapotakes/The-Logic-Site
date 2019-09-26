@@ -1,0 +1,122 @@
+<!doctype html>
+<html id='html'>
+    <head>
+        <title id="pageTitle">Zalgo - Glitched Text Generator</title>
+        <link rel="icon" href="./favicon.png">
+        <meta content="Text Manipulator" property="og:title">
+        <meta content="Use this highly customizeable Text Editor to add or remove Diacritics to your strings!" property="og:description">
+        <meta content="Caltrop" property="og:site_name">
+        <meta name="theme-color" content="#FE019A">
+        <meta name="robots" content="index, follow">
+        <link href='./style.css' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="utf-8"/>
+    </head>
+
+    <body>
+        <div class="options">
+            <h1 id ="title">ZALGO</h1>
+
+            <div class="optionStuff">
+                <div><h2>Global</h2>
+                    <div>Top
+                        <input type="range" min="0" max="50" value="5" class="slider" id="topSlider">
+                        <input type="number" id="topNum" min="0" max="5000" value="5">
+                    </div>
+                    <div>Center
+                            <input type="range" min="0" max="100" value="20" class="slider" id="centerSlider">
+                            <input type="number" id="centerNum" min="0" max="100" value="20">
+                    </div>
+                    <div>Bottom
+                        <input type="range" min="0" max="50" value="5" class="slider" id="bottomSlider">
+                        <input type="number" id="bottomNum" min="0" max="5000" value="5">
+                    </div>
+                    <div>Seed
+                        <input type="range" min="0" max="922337036854775807" value="0" class="slider" id="seedSlider">
+                        <input type="number" id="seedNum" min="0" max="922337036854775807" value="5">
+                    </div>
+                </div>
+                <div id ="letter"><h2>Letter</h2>
+                    <select name="Current Letter" id="letterselect">
+                        <option value="h">h</option>
+                    </select>
+                    <input type="checkbox" name="letterIgnoresGlobal" id="ignoresGlobalCheck">Ignores Global Settings<br>
+                    <div>Top
+                        <input type="range" min="0" max="50" value="5" class="slider" id="topSliderLetter">
+                        <input type="number" id="topNumLetter" min="0" max="5000" value="5">
+                    </div>
+                    <div>Center
+                            <input type="range" min="0" max="100" value="20" class="slider" id="centerSliderLetter">
+                            <input type="number" id="centerNumLetter" min="0" max="100" value="20">
+                    </div>
+                    <div>Bottom
+                        <input type="range" min="0" max="50" value="5" class="slider" id="bottomSliderLetter">
+                        <input type="number" id="bottomNumLetter" min="0" max="5000" value="5">
+                    </div>
+                </div>
+    
+                <div><h2>Diacritics</h2>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='enableAll' value = 'Enable All'>
+                        <input class='button' type='submit' id='disableAll' value = 'Disable All'>
+                        <input class='button' type='submit' id='toggleAll' value = 'Toggle All'>
+                    </div>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='enableTop' value = 'Enable Top'>
+                        <input class='button' type='submit' id='disableTop' value = 'Disable Top'>
+                        <input class='button' type='submit' id='toggleTop' value = 'Toggle Top'>
+                    </div>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='enableCenter' value = 'Enable Center'>
+                        <input class='button' type='submit' id='disableCenter' value = 'Disable Center'>
+                        <input class='button' type='submit' id='toggleCenter' value = 'Toggle Center'>
+                    </div>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='enableBottom' value = 'Enable Bottom'>
+                        <input class='button' type='submit' id='disableBottom' value = 'Disable Bottom'>
+                        <input class='button' type='submit' id='toggleBottom' value = 'Toggle Bottom'>
+                    </div>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='enableLatin' value = 'Enable Latin'>
+                        <input class='button' type='submit' id='disableLatin' value = 'Disable Latin'>
+                        <input class='button' type='submit' id='toggleLatin' value = 'Toggle Latin'>
+                    </div>
+                        
+                </div>
+    
+                <div><h2>Copy to Clipboard</h2>
+                    <div class="buttons">
+                        <input class='button' type='submit' id='copyPlain' value = 'Plain'>
+                        <input class='button' type='submit' id='copyJS' value = 'JS'>
+                        <input class='button' type='submit' id='copyHTML' value = 'HTML'>
+                        <div id="divtoshow" style="display:none">test</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="texts">
+            <div>
+                <div contenteditable="true" id="input" class="text">Welcome to the Zalgo text generator!!</div>
+                <p id="inputChars">n Characters</p>
+            </div>
+
+            <div>
+                <div id='output' onclick="selectText('output')"class="text">h</div>
+                <p id="outputChars">n Characters</p>
+            </div>
+            
+        </div>
+        <div class="viewwrap">
+            <div class="viewer3" id="viewer3"></div>
+            <div class="viewer2" id="viewer2"></div>
+            <div class="viewer" id="viewer"></div>
+        </div>
+    </body>
+    <div class="invisible" id="invisible">placeholder</div>
+
+    <script src="./definitions.js"></script>
+    <script src="./display.js"></script>
+    <script src="./generator.js"></script>
+    <script src="./input.js"></script>
+</html>
