@@ -11,17 +11,17 @@ function move() {
 	let curX = parseFloat(logo.style.marginLeft.replace('px', ''));
 	curY = parseFloat(logo.style.marginTop.replace('px', ''));
 
-	if (curX > window.innerWidth - 405) {
+	if (curX > window.innerWidth - 370) {
 		moveX = -1.5;
 		updateLogo();
-	} else if (curX < 1) {
+	} else if (curX < -30) {
 		moveX = 1.5;
 		updateLogo();
 	}
-	if (curY > window.innerHeight - 205) {
+	if (curY > window.innerHeight - 175) {
 		moveY = -1.5;
 		updateLogo();
-	} else if (curY < 1) {
+	} else if (curY < -25) {
 		moveY = 1.5;
 		updateLogo();
 	}
