@@ -11,7 +11,12 @@
         <meta charset="utf-8"/>
     </head>
     <canvas id="canvas"></canvas>   
-    <p id="t">You have been counting for 0 seconds!</p>
+    <div>
+        <p id="t">You have been counting for 0 seconds!</p>
+        <div class="sliderContainer">
+            <input id="sSlider" class="range" type="range" min="0.01" max="1"value="0.1" step="0.01">
+        </div>
+    </div>
 
     <script>
         document.addEventListener('contextmenu', e => e.preventDefault());
@@ -156,7 +161,7 @@
                         while(ts.length > tsl) {
                             tsl++;
                             particleAlphabet.size -= 15;
-                            particleAlphabet.speed += 0.01
+                            particleAlphabet.speed -= 0.01
                             particleAlphabet.makeParticles(1000)
                         }
                         if(particleAlphabet.size < 50) particleAlphabet.size = 50;
@@ -165,7 +170,7 @@
                         particleAlphabet.changeLetter();
                         particleAlphabet.getPixels(particleAlphabet.tmpCanvas, particleAlphabet.tmpCtx);
                         particleAlphabet.change = true;
-                    }, particleAlphabet.speed * 10000)
+                    }, ((1/(particleAlphabet.speed+0.01)) * 100)+100)
                 }
 
                 particleAlphabet.ctx.fillStyle = '#373737';
@@ -174,6 +179,7 @@
             }
         };
 
+        document.getElementById('sSlider').oninput = function() {particleAlphabet.speed = parseFloat(this.value)}
         window.onload = particleAlphabet.init;
     </script>
 
@@ -210,6 +216,134 @@
             margin-left:-800px;
             bottom:0px;
             left:50%;
+        }
+        .sliderContainer {
+            z-index: 99;
+            position:absolute;
+            width:1600px;
+            height:100px;
+            margin-left:-800px;
+            bottom:0px;
+            left:50%;
+            overflow: hidden;
+
+            display: block;   
+            text-align: center;
+        }
+        .sliderContainer:hover .range {
+            transform: translateY(-3000%);
+        }
+        .range {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: absolute;
+            width: 200px;
+            margin-left: -7%;
+            margin-top: 8%;
+            transition: transform .6s ease-in-out;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            background: rgba(59,173,227,1);
+            background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
+            background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+            height: 2px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-moz-range-track {
+            -moz-appearance: none;
+            background: rgba(59,173,227,1);
+            background: -moz-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(59,173,227,1)), color-stop(25%, rgba(87,111,230,1)), color-stop(51%, rgba(152,68,183,1)), color-stop(100%, rgba(255,53,127,1)));
+            background: -webkit-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -o-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: -ms-linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            background: linear-gradient(45deg, rgba(59,173,227,1) 0%, rgba(87,111,230,1) 25%, rgba(152,68,183,1) 51%, rgba(255,53,127,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1 );
+            height: 2px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: 2px solid;
+            border-radius: 50%;
+            height: 25px;
+            width: 25px;
+            max-width: 80px;
+            position: relative;
+            bottom: 11px;
+            background-color: #1d1c25;
+            cursor: -webkit-grab;
+
+            -webkit-transition: border 1000ms ease;
+            transition: border 1000ms ease;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            -moz-appearance: none;
+            border: 2px solid;
+            border-radius: 50%;
+            height: 25px;
+            width: 25px;
+            max-width: 80px;
+            position: relative;
+            bottom: 11px;
+            background-color: #1d1c25;
+            cursor: -moz-grab;
+            -moz-transition: border 1000ms ease;
+            transition: border 1000ms ease;
+        }
+
+
+
+        .range.blue::-webkit-slider-thumb {
+            border-color: rgb(59,173,227);
+        }
+
+        .range.ltpurple::-webkit-slider-thumb {
+            border-color: rgb(87,111,230);
+        }
+
+        .range.purple::-webkit-slider-thumb {
+            border-color: rgb(152,68,183);
+        }
+
+        .range.pink::-webkit-slider-thumb {
+            border-color: rgb(255,53,127);
+        }
+
+        .range.blue::-moz-range-thumb {
+            border-color: rgb(59,173,227);
+        }
+
+        .range.ltpurple::-moz-range-thumb {
+            border-color: rgb(87,111,230);
+        }
+
+        .range.purple::-moz-range-thumb {
+            border-color: rgb(152,68,183);
+        }
+
+        .range.pink::-moz-range-thumb {
+            border-color: rgb(255,53,127);
+        }
+
+        input[type=range]::-webkit-slider-thumb:active {
+            cursor: -webkit-grabbing;
+        }
+
+        input[type=range]::-moz-range-thumb:active {
+            cursor: -moz-grabbing;
         }
         .secret:hover {
             color: #CDFFF4;
