@@ -2,7 +2,6 @@
 <html id='html'>
     <head>
         <title id="title">Counting: 0</title>
-        <link rel="icon" href="./favicon.png">
         <meta content="Counting to Infinity" property="og:title">
         <meta content="Ever wanted to see all Numbers get displayed in Order? Interested in counting to Infinity? Join me and watch the pretty Numbers!" property="og:description">
         <meta content="Caltrop" property="og:site_name">
@@ -24,11 +23,9 @@
             var canvas = document.getElementById('canvas')
             canvas.style.width = window.innerWidth + 'px';
             canvas.style.height = window.innerHeight + 'px';
-
-            flock.createLocalGroups(128);
         }
 
-
+        const start = Date.now();
         var n = bigInt(2)
         var ln = 0;
         var ts;
@@ -67,26 +64,11 @@
             return str.replace(/, ([^,]*)$/, '').replace(/, ([^,]*)$/, ' and $1');
         };
 
-        setInterval(() => {
-            if(!n || !n.subtract || n.subtract(ln) != 1) {
-                if((typeof n == "number" || typeof n == "string") && isFinite(n)) {
-                    n = bigInt(n);
-                } else n = bigInt(ln)
-            }
-            ln = n;
-            n = n.add(1);
-            ts = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            while(ts.length > tsl) {
-                tsl++;
-                particleAlphabet.makeParticles(350)
-            }
-            document.getElementById('title').innerHTML = "Counting: " + ts;
-            document.getElementById('t').innerHTML = ('You have been counting for '+getTime(n.multiply(1000))+'!').replace(/h/g, '<span class="secret" onclick="n+=Math.floor(Math.random() * 1000000)">h</span>')
-
-        }, 1000)
 
         var particleAlphabet = {
-            step: 0,
+            change: true,
+            speed: 0.099,
+            size: 500,
             Particle: function(x, y) {
                 this.x = x;
                 this.y = y;
@@ -111,13 +93,6 @@
 
                 particleAlphabet.canvas.width = particleAlphabet.W;
                 particleAlphabet.canvas.height = particleAlphabet.H;
-
-                setInterval(function(){
-                    particleAlphabet.changeLetter();
-                    particleAlphabet.getPixels(particleAlphabet.tmpCanvas, particleAlphabet.tmpCtx);
-                }, 1200);
-
-                particleAlphabet.makeParticles(0);
                 particleAlphabet.animate();
             }, 
             currentPos: 0,
@@ -136,7 +111,7 @@
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 ctx.fillStyle = 'red';
-                ctx.font = 'italic bold 330px Noto Serif';
+                ctx.font = 'italic bold '+particleAlphabet.size+'px Noto Serif';
                 ctx.fillText(keyword, canvas.width / 2 - ctx.measureText(keyword).width / 2, canvas.height / 2 + 100);
                 var idata = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 var buffer32 = new Uint32Array(idata.data.buffer);
@@ -150,24 +125,49 @@
                 }
             },
             animateParticles: function() {
-                var p, pPos;
+                var p, pPos, doChange = true;
                 for (var i = 0, num = particleAlphabet.particles.length; i < num; i++) {
                     p = particleAlphabet.particles[i];
                     pPos = particleAlphabet.particlePositions[i];
+                    if(!p || !pPos) continue;
                     if (particleAlphabet.particles.indexOf(p) === particleAlphabet.particlePositions.indexOf(pPos)) {
-                    p.x += (pPos.x - p.x) * .3;
-                    p.y += (pPos.y - p.y) * .3;
-                    p.draw(particleAlphabet.ctx);
+                        p.x += (pPos.x - p.x) * particleAlphabet.speed;
+                        p.y += (pPos.y - p.y) * particleAlphabet.speed;
+                        p.draw(particleAlphabet.ctx);
+                    }
                 }
-                }
+                if(doChange) particleAlphabet.allowChange = true;
             },
             animate: function() {
                 requestAnimationFrame(particleAlphabet.animate);
-                particleAlphabet.step++
-                if(particleAlphabet.step % 100 == 0) {
-                    particleAlphabet.makeParticles(10)
-                    particleAlphabet.step = 0;
+
+                if(particleAlphabet.change && particleAlphabet.allowChange) {
+                    particleAlphabet.change = false;
+                    setTimeout(() => {
+                        if(!n || !n.subtract || n.subtract(ln) != 1) {
+                            if((typeof n == "number" || typeof n == "string") && isFinite(n)) {
+                                n = bigInt(n);
+                            } else n = bigInt(ln)
+                        }
+                        ln = n;
+                        n = n.add(1);
+                        ts = n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        document.getElementById('t').innerHTML = ('You have been counting for '+getTime(Date.now() - start)+'!').replace(/h/g, '<span class="secret" onclick="n+=Math.floor(Math.random() * 1000000)">h</span>')
+                        while(ts.length > tsl) {
+                            tsl++;
+                            particleAlphabet.size -= 15;
+                            particleAlphabet.speed += 0.01
+                            particleAlphabet.makeParticles(1000)
+                        }
+                        if(particleAlphabet.size < 50) particleAlphabet.size = 50;
+
+                        document.getElementById('title').innerHTML = "Counting: " + ts;
+                        particleAlphabet.changeLetter();
+                        particleAlphabet.getPixels(particleAlphabet.tmpCanvas, particleAlphabet.tmpCtx);
+                        particleAlphabet.change = true;
+                    }, particleAlphabet.speed * 10000)
                 }
+
                 particleAlphabet.ctx.fillStyle = '#373737';
                 particleAlphabet.ctx.fillRect(0, 0, particleAlphabet.W, particleAlphabet.H);
                 particleAlphabet.animateParticles();
