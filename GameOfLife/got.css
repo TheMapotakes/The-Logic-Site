@@ -1,0 +1,37 @@
+.cell {
+	width: 10;
+	height: 10;
+	border: 1px inset #7c7c7c55;
+}
+.cellwrap {
+	display: inline-flex;
+}
+.ascii-art {
+	font-family: monospace;
+	white-space: pre;
+	color: #000;
+	height: 600px;
+	width: 800px;
+	text-align: left;
+	display: table-cell;
+	vertical-align: middle;
+	animation: textglow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+	from {
+		box-shadow: 0 0 5px #ffb500, 0 0 10px #ffb500, 0 0 15px #f9ca3a, 0 0 20px #f9ca3a, 0 0 25px #f9ca3a, 0 0 30px #f9ca3a, 0 0 35px #f9ca3a;
+	}
+	to {
+		box-shadow: 0 0 10px #ffb500, 0 0 15px #ffe79e, 0 0 20px #ffe79e, 0 0 25px #ffe79e, 0 0 30px #ffe79e, 0 0 35px #ffe79e, 0 0 40px #ffe79e;
+	}
+}
+
+@keyframes textglow {
+	from {
+		text-shadow: 0 0 1px #e0e5ff, 0 0 2px #e0e5ff, 0 0 3px #e0e5ff, 0 0 4px #e0e5ff, 0 0 5px #e0e5ff, 0 0 6px #e0e5ff, 0 0 7px #e0e5ff;
+	}
+	to {
+		text-shadow: 0 0 2px #e0e5ff, 0 0 3px #e0e5ff, 0 0 4px #fff, 0 0 5px #fff, 0 0 6px #fff, 0 0 7px #fff, 0 0 8px #fff;
+	}
+}

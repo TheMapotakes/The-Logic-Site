@@ -1,0 +1,27 @@
+<head>
+    <title>Game of Life</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta content="Game of Life" property="og:title">
+    <meta content="Conway's Game of Life with an age appropriate aestethic" property="og:description">
+    <meta content="Caltrop" property="og:site_name">
+    <meta name="theme-color" content="#FE019A">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="./favicon.png">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <meta charset="utf-8"/>
+    <script src="./manage.js"></script>
+    <link href='./crt.css' rel='stylesheet' type='text/css'>
+    <link href='./got.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <input type="checkbox" id="switch" oninput="if(this.checked) init(); else shutdown()">
+    <label for="switch" class="switch-label">Turn </label>
+    
+    <div class="container">
+      <div class="screen">
+          <div class="gotWrap">if you are seeing this an Error occured. Please reload the page</div>
+      </div>
+      <div class="overlay">if you are seeing this an Error occured. Please reload the page</div>
+    </div>
+</body>
